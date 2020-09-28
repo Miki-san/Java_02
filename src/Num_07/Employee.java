@@ -16,13 +16,8 @@ public class Employee {
         this.setPosition(Position);
         this.Salary = position.calcSalary(this.baseSalary);
     }
-    void setPosition(String Position){
-        if(Position == "Manager"){
-            position = new Manager(this.selfCompany);
-        } else if (Position == "TopManager"){
-            position = new TopManager(this.selfCompany);
-        }else if (Position == "Operator"){
-            position = new Operator(this.selfCompany);
-        }
+    void setPosition(EmployeePosition position){
+
+            this.position = position;
     }
 }
