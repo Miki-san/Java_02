@@ -1,5 +1,6 @@
 package Num_07;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,13 +8,12 @@ public class Company {
     int count;
     String Name;
     double Income = 0;
-    List<Employee> Staff;
-    List<Employee> SortedStaff;
+    List<Employee> Staff = new ArrayList<Employee>();
+    List<Employee> SortedStaff = new ArrayList<Employee>();
 
     Company(String name){
         this.Name = name;
         this.count = 0;
-        SortedStaff.addAll(Staff);
     }
 
     double getIncome(){
@@ -28,11 +28,13 @@ public class Company {
 
     void hire(Employee employee){
         Staff.add(employee);
+        SortedStaff.add(employee);
         this.count++;
     }
 
     void hireAll(List<Employee> employees){
         Staff.addAll(employees);
+        SortedStaff.addAll(employees);
         this.count += employees.size();
     }
 
@@ -40,10 +42,11 @@ public class Company {
         for (Employee employee : Staff) {
             if(employee.id == Id){
                 Staff.remove(employee);
+                SortedStaff.clear();
                 SortedStaff.addAll(Staff);
-                SortedStaff.addAll(getSortedStaff());
             }
         }
+        count --;
     }
     private void toSwap(Employee first, Employee second){
         Employee temp = first;
@@ -66,6 +69,7 @@ public class Company {
 
     List<Employee> getTopSalaryStaff(int Count){
         Collections.reverse(getSortedStaff());
+
         return SortedStaff.subList(0, Count--);
     }
 

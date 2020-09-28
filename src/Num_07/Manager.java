@@ -13,6 +13,6 @@ public class Manager implements EmployeePosition {
 
     @Override
     public double calcSalary(double baseSalary) {
-        return baseSalary + 0.05 * (115000 + 35000 * (int)Math.random());
+        return baseSalary + 0.05 * (115000 + (int)(35000 * Math.random()));
     }
 }
