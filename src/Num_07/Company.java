@@ -2,10 +2,11 @@ package Num_07;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class Company {
-    int count;
+    int count, current_count;
     String Name;
     double Income = 0;
     List<Employee> Staff = new ArrayList<Employee>();
@@ -14,6 +15,7 @@ public class Company {
     Company(String name){
         this.Name = name;
         this.count = 0;
+        this.current_count = 0;
     }
 
     double getIncome(){
@@ -25,6 +27,11 @@ public class Company {
         }
         return counter;
     }
+
+    void refresh(){
+        current_count = count;
+    };
+
 
     void hire(Employee employee){
         Staff.add(employee);
@@ -39,15 +46,17 @@ public class Company {
     }
 
     void fire(int Id){
-        for (Employee employee : Staff) {
-            if(employee.id == Id){
-                Staff.remove(employee);
-                SortedStaff.clear();
-                SortedStaff.addAll(Staff);
+        for (int i = 0; i < Staff.size(); i++){
+            if(Staff.get(i).id == Id){
+                Staff.remove(i);
+                break;
             }
         }
+        SortedStaff.clear();
+        SortedStaff.addAll(Staff);
         count --;
     }
+
     private void toSwap(Employee first, Employee second){
         Employee temp = first;
         first = second;
@@ -68,12 +77,16 @@ public class Company {
     }
 
     List<Employee> getTopSalaryStaff(int Count){
-        Collections.reverse(getSortedStaff());
+        List<Employee> temp = new ArrayList<Employee>();
+        temp.addAll(getSortedStaff());
+        Collections.reverse(temp);
 
-        return SortedStaff.subList(0, Count--);
+        return temp.subList(0, Count--);
     }
 
     List<Employee> getLowestSalaryStaff(int Count){
-        return getSortedStaff().subList(0, Count--);
+        List<Employee> temp = new ArrayList<Employee>();
+        temp.addAll(getSortedStaff());
+        return temp.subList(0, Count--);
     }
 }
