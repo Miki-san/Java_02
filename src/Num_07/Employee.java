@@ -15,7 +15,6 @@ public class Employee {
         this.id = Id;
         this.setPosition(Position);
         this.Salary = position.calcSalary(this.baseSalary);
-
     }
 
     @Override
