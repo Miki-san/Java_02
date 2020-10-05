@@ -11,11 +11,11 @@ public class Main {
         Random r = new Random();
         for (int i = 0; i < 50; i++){
             num = "+8-";
-            k = r.nextInt(1000);
+            k = 100 + r.nextInt(900);
             num += String.valueOf(k) + "-";
-            k = r.nextInt(100);
+            k = 10 + r.nextInt(90);
             num += String.valueOf(k) + "-";
-            k = r.nextInt(100);
+            k = 10 + r.nextInt(90);
             num += String.valueOf(k);
             company.hire(new Employee("Maksim", "Astaf'ev", "Moscow", num, 30_000 + r.nextInt(20_000), 1900 + r.nextInt(120), 1 + r.nextInt(12), 1 + r.nextInt(28)));
         }
