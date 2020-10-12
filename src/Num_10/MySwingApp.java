@@ -2,6 +2,7 @@ package Num_10;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +60,9 @@ class VerticalLayout implements LayoutManager {
 
 public class MySwingApp extends JFrame {
     public MySwingApp() {
+        Font mainFont = new Font("Arial",Font.BOLD,24);
+
+        DecimalFormat dc = new DecimalFormat("###.####");
         setTitle("My swing app!!!");
         setSize(200, 175);
 
@@ -82,13 +86,17 @@ public class MySwingApp extends JFrame {
                     b = Double.parseDouble(field_b.getText());
                     switch (but.getText()) {
                         case "+":
-                            label_res.setText("= " + (a + b));
+                            label_res.setText("= " + dc.format(a + b));
+                            break;
                         case "-":
-                            label_res.setText("= " + (a - b));
+                            label_res.setText("= " + dc.format(a - b));
+                            break;
                         case "*":
-                            label_res.setText("= " + (a * b));
+                            label_res.setText("= " + dc.format(a * b));
+                            break;
                         case "/":
-                            label_res.setText("= " + (a / b));
+                            label_res.setText("= " + dc.format(a / b));
+                            break;
                     }
                 } catch (Exception ex) {
                     label_res.setText(ex.toString());
