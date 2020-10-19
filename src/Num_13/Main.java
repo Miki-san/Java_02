@@ -1,41 +1,25 @@
 package Num_13;
 
+import java.util.Scanner;
+
 public class Main {
-    public static final String ANSI_RESET = "\u001B[0m";
-
-    public static void tryPrint(String text, Colors color) throws Exception {
-        String ANSI_COLOR = "\u001B["+color.getColorCode()+"m";
-        System.out.print(ANSI_COLOR+text+ANSI_RESET);
-    }
-
-    public static void printColored(String text, Colors color) throws IncorrectColorException{
-        String ANSI_COLOR = "\u001B["+color.getColorCode()+"m";
-        System.out.print(ANSI_COLOR+text+ANSI_RESET);
-    }
-
-    public static void runtimePrint(String text, Colors color)throws RuntimeIncorrectColorException {
-        String ANSI_COLOR = "\u001B["+color.getColorCode()+"m";
-        System.out.print(ANSI_COLOR+text+ANSI_RESET);
-    }
-
-    public static void main(String[] args) {
-        for (int i = 0; i < 10; i++){
-            try {
-                tryPrint("H", Colors.RED);
-                tryPrint("el", Colors.ORANGE);
-                tryPrint("lo", Colors.YELLOW);
-                printColored(" w", Colors.GREEN);
-                printColored("or", Colors.CYAN);
-
-            } catch (IncorrectColorException ice){
-                System.out.println("Incorrect color!");
-            } catch (Exception ex) {
-                System.out.println("Strange exception!");
-            } finally {
-                runtimePrint("ld", Colors.BLUE);
-                runtimePrint("!", Colors.MAGENTA);
-                System.out.println();
-            }
+    public static void main(String[] args){
+        doSome obj = new doSome();
+        boolean bool;
+        try {
+            double i = Double.parseDouble(new Scanner(System.in).nextLine());
+            System.out.println(obj.doSomethingWithCount(i));
+        } catch (IncorrectNumException ine){
+            System.out.println("Num cannot equals 1");
+        } catch (NumberFormatException nfe) {
+            System.out.println("Wrong num!");
+        } finally {
+            System.out.println();
+        }
+        System.out.println("If something wrong write 'true'");
+        bool = new Scanner(System.in).nextBoolean();
+        if (bool){
+            throw new RuntimeIncorrectNumException();
         }
     }
 }
