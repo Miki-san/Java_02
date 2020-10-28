@@ -1,54 +1,36 @@
 package Num_15;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Nodes {
-    public int command;
-    public ArrayList<Nodes> links;
+    private ArrayList<Integer> command = new ArrayList<>();
+    private ArrayList<Nodes> links = new ArrayList<>();
+    private final ArrayList<String> commands = new ArrayList<>();
 
-    public Nodes(int command) {
-        this.command = command;
+    public Nodes() {
+        String[] init_comm = {"create_project", "add_library", "restart", "test", "deploy", "drop_db"};
+        this.commands.addAll(Arrays.asList(init_comm));
     }
 
-    public String getCommand() {
-        switch (command) {
-            case 1: {
-                return "create_project";
-                break;
-            }
-            case 2: {
-                return "add_library";
-                break;
-            }
-            case 3: {
-                return "restart";
-                break;
-            }
-            case 4: {
-                return "test";
-                break;
-            }
-            case 5: {
-                return "deploy";
-                break;
-            }
-            case 6: {
-                return "drop_db";
-                break;
-            }
-        }
-        return "";
+    public void getCommand(int index) {
+        System.out.println(commands.get(command.get(index) - 1));
     }
 
-    public void setCommand(int command) {
-        this.command = command;
+    public void setCommandToNode(int command, int index) {
+        this.command.add(index, command); ;
+    }
+
+    public void setNewCommand(String command){
+        this.commands.add(command);
     }
 
     public ArrayList<Nodes> getLinks() {
         return links;
     }
 
-    public void setLinks(ArrayList<Nodes> links) {
-        this.links = links;
+    public void addLink(Nodes link, int comm) {
+        this.command.add(comm);
+        this.links.add(link);
     }
 }
