@@ -28,8 +28,8 @@ public class Main {
         System.out.println("Type 'help' to see a list of available commands");
         while (true){
             command = scanner.next();
-            switch (command){
-                case "add":
+            switch (command) {
+                case "add" -> {
                     int id;
                     String data, description;
                     boolean isGood;
@@ -42,10 +42,9 @@ public class Main {
                     System.out.print("Item description: ");
                     description = scanner.next();
                     System.out.println("Item added: " + storage.addItem(new Item(id, data, isGood, description)));
-                    command = "";
-                    break;
+                }
 
-                case "get":
+                case "get" -> {
                     System.out.print("Enter item id: ");
                     int getId = scanner.nextInt();
                     Item respond = storage.get(getId);
@@ -54,18 +53,16 @@ public class Main {
                     } else {
                         System.out.println(respond + " Description: " + respond.getDescription());
                     }
-                    command = "";
-                    break;
+                }
 
-                case "getAll":
+                case "getAll" -> {
                     List<Item> items = storage.getAll();
-                    for (Object i: items) {
+                    for (Object i : items) {
                         System.out.println(i);
                     }
-                    command = "";
-                    break;
+                }
 
-                case "edit":
+                case "edit" -> {
                     System.out.print("Enter item id: ");
                     int edit_id = scanner.nextInt();
                     Item current_item = storage.get(edit_id);
@@ -82,33 +79,28 @@ public class Main {
                     System.out.print("Enter new item description: ");
                     new_description = scanner.next();
                     storage.editItem(new Item(new_id, new_data, new_isGood, new_description), edit_id);
-                    command = "";
-                    break;
+                }
 
-                case "delete":
+                case "delete" -> {
                     System.out.print("Enter item id: ");
                     int delete_id = scanner.nextInt();
-                    if(storage.get(delete_id)!=null)
+                    if (storage.get(delete_id) != null)
                         System.out.println("Item with id " + delete_id + " was deleted");
                     storage.deleteItem(delete_id);
-                    command = "";
-                    break;
+                }
 
-                case "help":
+                case "help" -> {
                     System.out.println("Available commands\n" +
                             "get - returns a specified item\n" +
                             "getAll - return all items in the storage\n" +
                             "add - add new item to the storage\n" +
                             "edit - edit the specified item\n" +
                             "delete - delete a specified item");
-                    command = "";
-                    break;
-
-
-            }
-            if (command != "") {
-                System.out.println("Invalid command!");
-                System.out.println("Type 'help' to see a list of available commands");
+                }
+                default -> {
+                    System.out.println("Invalid command!");
+                    System.out.println("Type 'help' to see a list of available commands");
+                }
             }
         }
     }
