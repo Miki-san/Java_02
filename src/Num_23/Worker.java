@@ -29,9 +29,6 @@ public class Worker {
     Gson gson = new Gson();
     List<Integer> ready_id = new ArrayList<>();
 
-
-
-
     public void getTasks(List<JsonObject> tasks) {
         tasks.clear();
         HttpRequest request = HttpRequest.newBuilder()
@@ -51,9 +48,9 @@ public class Worker {
     }
 
     public double Calculation(String expression){
-        int a, b;
+        double a, b;
         String sign;
-        DecimalFormat dm = new DecimalFormat(",##");
+        DecimalFormat dm = new DecimalFormat("#.##");
         expression = expression.replace(" ", "");
         String regular = "(?<=\\d)(?=\\D)|(?<=\\D)(?=\\D)|(?<=\\d\\D)(?=\\d)";
         String[] splitted = expression.split(regular);
@@ -74,29 +71,33 @@ public class Worker {
             }
 
             case "/" -> {
-                return  Double.parseDouble(dm.format((double)(a / b)));
+                double r = a/b;
+                String res = dm.format(r);
+                res = res.replace(",", ".");
+                r = Double.parseDouble(res);
+                return r;
             }
         }
         return 0;
     }
 
-    public void doTasks(List<JsonObject> tasks){
-            for (JsonObject task : tasks) {
-                if(!ready_id.contains(task.get("id").getAsInt())) {
-                    System.out.println(task.get("taskDescription") + " performed.");
-                    double taskRes = Calculation(task.get("expression").getAsString());
-                    sendReport(task.get("id").getAsInt(),taskRes);
-                    ready_id.add(task.get("id").getAsInt());
-                    try(FileWriter fileWriter = new FileWriter(path)) {
-                        fileWriter.write("[");
-                        fileWriter.write(gson.toJson(ready_id));
-                        fileWriter.write("]");
-                        fileWriter.flush();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+    public void doTasks(List<JsonObject> tasks) {
+        for (JsonObject task : tasks) {
+            if (!ready_id.contains(task.get("id").getAsInt())) {
+                System.out.println(task.get("taskDescription") + " performed.");
+                double taskRes = Calculation(task.get("expression").getAsString());
+                sendReport(task.get("id").getAsInt(), taskRes);
+                ready_id.add(task.get("id").getAsInt());
+                try (FileWriter fileWriter = new FileWriter(path)) {
+                    fileWriter.write("[");
+                    fileWriter.write(gson.toJson(ready_id));
+                    fileWriter.write("]");
+                    fileWriter.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
+        }
     }
 
     public void sendReport(int taskId, double result) {
@@ -122,6 +123,8 @@ public class Worker {
                 fileWriter.write("[]");
                 fileWriter.flush();
             }
+            Type type = new TypeToken<List<Integer>>(){}.getType();
+            ready_id = gson.fromJson(jsonReader, type);
         } catch (IOException exception) {
             exception.printStackTrace();
         }
