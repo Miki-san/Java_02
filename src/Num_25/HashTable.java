@@ -19,12 +19,19 @@ public class HashTable<K,V> implements HashMapInterface<K,V>{
     @Override
     public void add(K key, V value) {
         int bucket = keyHash(key) % capacity;
-        Entry<K,V> part = buckets[bucket];
-        if(part != null){
-            while(part.hasNext()){
-                part = part.getNext();
+        Entry<K,V> entry = buckets[bucket];
+        if(entry != null){
+            while(true) {
+                if(entry.getKey().equals(key)){
+                    entry.setValue(value);
+                    return;
+                }
+                if(!entry.hasNext()){
+                    break;
+                }
+                entry = entry.getNext();
             }
-            part.setNext(new Entry<>(key,value));
+            entry.setNext(new Entry<>(key,value));
         } else {
             buckets[bucket] = new Entry<>(key,value);
         }

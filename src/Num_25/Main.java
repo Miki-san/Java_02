@@ -12,5 +12,4 @@ public class Main {
         System.out.println("____");
         System.out.println(numbers.get(294));
     }
-
 }
